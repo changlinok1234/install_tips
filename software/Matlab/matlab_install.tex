@@ -1,0 +1,116 @@
+\documentclass[a4paper,12pt]{article}
+%%--------------------------------------------------------------------
+%packages
+\usepackage{zhfontcfg}
+\linespread{1.5} %行间距
+\title{Matlab2012a的安装}
+\author{常琳（整理）}
+\date{2015-8-21}
+\begin{document}
+\maketitle
+
+
+\section{安装}
+
+\begin{enumerate}
+
+\item 挂载iso文件
+
+sudo  mount  -o  loop  路径Mathworks.Matlab.R2012a.UNIX.iso  /mnt  
+
+\item 进入挂载目录
+
+cd  /mnt
+
+\item 安装
+
+sudo  ./install
+
+\item 出现图形化安装界面，破解说明在挂载目录下面的  crack  文件夹，建议安装到/opt/matlab目录下
+
+\item 安装完成后，可以用用命令行打开matlab
+
+sudo  /opt/matlab/bin/matlab
+
+\item 解决The  desktop  configuration  was  not  saved  successfully
+问题的关键就在于Permission  Denied，因此解决方法就是给目录和文件加权限，
+代码:
+
+sudo  chmod  a+w  -R  ~/.matlab
+
+这一步也可以以后用到的时候写
+
+\end{enumerate}
+
+\section{创建快捷方式}
+
+\begin{enumerate}
+\item 将附件里的  matlab.desktop  文件放在  /usr/share/applications  下，图片  matlab.png  放在  /usr/share/icons  下
+
+可是使用sudo  cp,也可以使用命令:
+
+sudo  nautilus
+
+进入文件管理器临时使用root权限，否则在用户账户下面没有权限在除  /home  之外的其他目录进行删除复制等操作。
+
+\item 建立软链接使快捷方式生效
+
+代码:
+
+sudo  ln  -s  /opt/matlab/bin/matlab    /usr/bin/matlab
+
+\end{enumerate}
+
+\section{解决中文乱码问题}
+
+\begin{enumerate}
+
+\item 字体显示美化  进入Matlab，从菜单打开：Files->preferences，打开Fonts页，把右边最下面的复选框Use  antialising  to  smooth  desktop  fonts选中，重启MATLAB，字体显示的效果就很好了.
+
+\item MATLAB使用自带的Java运行环境，根据CPU架构的不同，相对应的字体配置文件路径为：
+
+32位版本  /usr/local/matlab/sys/java/jre/glnx86/jre/lib/fontconfig.properties
+
+64位版本  /usr/local/matlab/sys/java/jre/glnxa64/jre/lib/fontconfig.properties
+
+下面以64位版本为例进行配置
+
+\item 进入字体配置文件目录
+代码:
+cd  /opt/matlab/sys/java/jre/glnx86/jre/lib
+
+如果fontconfig.properties文件不存在，可以从fontconfig.properties.src复制一个
+代码:
+sudo  cp  fontconfig.properties.src  fontconfig.properties
+
+效果图如附件里的  1.png
+
+\item 字体可直接用系统自带的文泉驿
+修改JRE的字体配置文件，打开配置文件：
+代码:
+  sudo  gedit  fontconfig.properties
+
+加入中文字体定义，在version=1下面一行输入
+
+allfonts.chinese-arphic1=-misc-simsun-medium-r-normal--0-0-0-0-p-0-iso10646-1
+
+接着指明中文字体路径，在allfonts.chinese-arphic1行后回车另起一行，输入中文字体文件的完整路径：
+
+filename.-misc-simsun-medium-r-normal--0-0-0-0-p-0-iso10646-1=/usr/share/fonts/truetype/wqy/wqy-microhei.ttc
+
+效果图如附件里的  2.png
+
+\item 修改字体搜索,  接着在此配置文件中查找  sequence.allfonts  行。如果其后的sequence开头的行中有:  chinese-arphics1，  可以略过此步；否则在其后面加入一行：  sequence.fallback=chinese-arphic1
+
+效果图如附件里的  3.png
+
+\end{enumerate}
+
+完成。
+
+参考网站:http://forum.ubuntu.org.cn/viewtopic.php?t=373776
+
+
+\end{document}
+
+

@@ -1,0 +1,139 @@
+\documentclass[a4paper,12pt]{article}
+%%--------------------------------------------------------------------
+%packages
+\usepackage{zhfontcfg}
+\defaultfontfeatures{Mapping=tex-text}  %%如果没有它，会有一些 tex 特殊字符无法正常使用，比如连字符。
+\linespread{1.5} %行间距
+\title{Ubuntu 14.04下安装TexLive2014并用XeTex配置中文字体}
+\author{常琳（整理）}
+\date{2015-8-21}
+\begin{document}
+\maketitle
+\section{安装TexLive2014}
+
+\begin{enumerate}
+\item 下载TexLive2014镜像文件到/home/changlin
+\item 挂载镜像文件：
+
+在终端输入：sudo mount -o loop /home/changlin/software/texlive2014.iso /mnt
+\item 进行安装
+
+在终端输入：cd /mnt
+
+           sudo ./install-tl
+
+注意安装后默认的安装目录是/usr/local，要把安装文件移动到/opt下：mv /usr/local/texlive /opt
+
+这一步不是很快，要稍等一会儿
+
+\item 配置环境变量：
+  
+  \begin{enumerate}
+   \item 打开终端，输入：sudo vim ~/.profile 　
+
+         在最后添加以下代码：
+
+        PATH=/opt/texlive/2014/bin/x86\_64（32为这里改为 i386，下同）-linux:\$PATH; export PATH
+        MANPATH=/opt/texlive/2014/texmf-dist/doc/man:\$MANPATH; export MANPATH
+
+        INFOPATH=/opt/texlive/2014/texmf-dist/doc/info:\$INFOPATH; export INFOPATH
+
+   \item 然后sudo vim /etc/manpath.config
+　　 在\# set up PATH to MANPATH mapping下输入
+
+        MANPATH\_MAP /opt/texlive/2014/bin/x86\_64-linux （空格）/opt/texlive/2013/texmf-dist/doc/man
+  
+  \end{enumerate}
+\item 测试
+
+此时texlive就安装成功了，你可以在/home下新建一个1.tex的文档，比如
+
+$\backslash$documentclass\{article\}
+
+$\backslash$begin\{document\}
+
+dffdrgdfgfdgfd
+
+$\backslash$end\{document\}
+
+然后打开终端输入cd /home
+
+               xelatex 1.tex
+
+如果能生成一个PDF文件，里面的内容是dffdrgdfgfdgfd ，就说明安装成功了。
+
+\end{enumerate}
+
+\section{XeTex中文配置}
+
+我们的宏包文件中有zhfontcfg.sty，步骤1可省
+
+\begin{enumerate}
+
+\item 在所新建测试文档的目录中新建一个zhfontcfg.sty的文件，然后使用命令sudo mktexlsr更新一下，文件的内容是
+
+% xetex/xelatex 字体设定宏包
+
+$\backslash$ProvidesPackage\{zhfontcfg\}
+
+$\backslash$usepackage\{fontspec,xunicode\}
+
+$\backslash$defaultfontfeatures\{Mapping=tex-text\} %如果没有它，会有一些 tex 特殊字符无法正常使用，比如连字符。
+
+% 中文断行
+
+$\backslash$XeTeXlinebreaklocale "zh"
+
+$\backslash$XeTeXlinebreakskip = 0pt plus 1pt minus 0.1pt
+
+$\backslash$setCJKmainfont[BoldFont=\{SimHei\}, ItalicFont=\{楷体\_GB2312\}]\{SimSun\}
+
+$\backslash$setCJKfamilyfont\{song\}\{SimSun\}
+
+$\backslash$setCJKfamilyfont\{hei\}\{SimHei\}
+
+$\backslash$setCJKfamilyfont\{kai\}\{楷体\_GB2312\}
+ 
+
+%楷体
+
+$\backslash$newcommand\{$\backslash$kai\}\{$\backslash$CJKfamily\{kai\}\} 
+
+$\backslash$def$\backslash$kaishu\{$\backslash$kai\}
+
+%黑体
+$\backslash$newcommand\{$\backslash$hei\}\{$\backslash$CJKfamily\{hei\}\} 
+
+$\backslash$def$\backslash$heiti\{$\backslash$hei\}
+
+%宋体
+
+$\backslash$newcommand\{$\backslash$song\}\{$\backslash$CJKfamily\{song\}\} 
+
+$\backslash$def$\backslash$songti\{$\backslash$song\}
+
+\item 察看电脑中所安装过的字体：在终端输入：fc-list :lang=zh-cn，将安装包里的Adobe-fonts-otf文件夹和wqy文件夹复制到/usr/share/fonts/truetype下
+
+sudo cp -a Adobe-fonts-otf /usr/share/fonts/truetype
+
+\item 测试
+
+新建一个名为2.tex的测试文档
+
+文档内容
+
+$\backslash$documentclass\{article\}
+
+$\backslash$usepackage\{zhfontcfg\}
+
+$\backslash$begin\{document\}
+
+中文
+
+$\backslash$end\{document\}
+
+输入命令xelatex 2.tex，若生成一个内容为“中文”的PDF文档，则说明配置成功了, 如果不行，可以重启下试试。（注意，你的.tex文档应该与zhfontcfg.sty文件同在一个文件夹）。
+
+\end{enumerate}
+
+\end{document}

@@ -1,0 +1,184 @@
+\documentclass[a4paper,12pt]{article}
+%%--------------------------------------------------------------------
+%packages
+\usepackage{zhfontcfg}
+\defaultfontfeatures{Mapping=tex-text}  %%如果没有它，会有一些 tex 特殊字符无法正常使用，比如连字符。
+\linespread{1.5} %行间距
+\title{Codeblocks与Opencv的安装与配置}
+\author{常琳（整理）}
+\date{2015-8-21}
+\begin{document}
+\maketitle
+
+\section{codeblocks安装}
+
+\begin{enumerate}
+
+\item 安装基本编译环境
+
+sudo apt-get install build-essential
+
+sudo apt-get install
+
+\item 安装codeblocks
+
+sudo apt-get install codeblocks
+
+sudo apt-get install codeblocks-dbg
+
+sudo apt-get install wxformbuilder
+
+\item 安装wxWidgets
+
+sudo apt-get install libwxbase2.8
+
+sudo apt-get install libwxbase2.8-dev
+
+sudo apt-get install libwxgtk2.8-0
+
+sudo apt-get install libwxgtk2.8-dev
+
+sudo apt-get install libwxgtk2.8-dbg
+
+sudo apt-get install wx-common
+
+sudo apt-get install wx2.8-headers
+
+sudo apt-get install wx2.8-i18n
+
+wx2.8-examples和wx2.8-doc想看文档可以装上
+
+\item 配置codeblocks
+
+打开codeblocks
+
+settings->global variables
+
+current variable标签后面点击new按钮，出来的框框填写wx
+
+然后 built-in fields下面
+
+base /usr
+
+include /usr/include/wx-2.8
+
+lib /usr/lib
+
+点击close保存 
+
+\end{enumerate}
+
+\section{安装opencv}
+
+\begin{enumerate}
+
+\item 系统更新
+
+sudo apt-get update
+
+sudo apt-get upgrade
+
+\item 安装必要的组件
+
+sudo apt-get install build-essential libgtk2.0-dev libjpeg-dev libtiff4-dev libjasper-dev libopenexr-dev cmake python-dev python-numpy python-tk libtbb-dev libeigen3-dev yasm libfaac-dev libopencore-amrnb-dev libopencore-amrwb-dev libtheora-dev libvorbis-dev libxvidcore-dev libx264-dev libqt4-dev libqt4-opengl-dev sphinx-common texlive-latex-extra libv4l-dev libdc1394-22-dev libavcodec-dev libavformat-dev libswscale-dev default-jdk ant libvtk5-qt4-dev
+
+\item 编译opecv3.0
+
+进入解压后的opencv3.0目录
+
+mkdir build
+
+进入build目录
+
+cd build
+
+cmake -D WITH\_TBB=ON -D BUILD\_NEW\_PYTHON\_SUPPORT=ON -D WITH\_V4L=ON -D INSTALL\_C\_EXAMPLES=ON -D INSTALL\_PYTHON\_EXAMPLES=ON -D BUILD\_EXAMPLES=ON -D WITH\_QT=ON -D WITH\_OPENGL=ON ..
+
+
+\item 安装opencv3.0
+
+在build目录
+
+\begin{enumerate}
+
+\item make  
+
+make编译失败，出现如下错误：
+
+make[2 ]:*** [modules/java/core+Algorithm-jdoc.java] 错误126
+
+make[1]:*** [modules/java/CmakeFiles/opencv\_java.dir/all ]错误2
+
+make:*** [all] 错误 2
+
+搜网上解决方案，把CMakeLists.txt里的有关java的--java support--和==java==部分删掉了，影响未知
+
+\item sudo make install
+
+\end{enumerate}
+
+\item 配置opencv.conf file ，加入环境变量  
+
+sudo gedit /etc/ld.so.conf.d/opencv.conf
+
+在opencv.conf里面加入命令
+
+/usr/local/lib
+
+更新库目录
+
+sudo ldconfig
+
+打开文件bash.bashrc  //这个暂时不知道是干嘛的,我没执行, 程序没影响
+
+sudo gedit /etc/bash.bashrc
+
+加入下面两行
+
+PKG\_CONFIG\_PATH=\$PKG\_CONFIG\_PATH:/usr/local/lib/pkgconfig
+
+export PKG\_CONFIG\_PATH
+
+\end{enumerate}
+
+\section{配置}
+
+\begin{enumerate}
+\item codeblocks链接库配置：Project->Build Options
+
+test1(工程名称)->Linker settings
+
+在Link libraries下面写
+
+/../../../usr/lib/libopencv\_core.so
+
+/../../../usr/lib/libopencv\_highgui.so
+
+以上仅是列举，lib文件里的都要加进去
+
+\item codeblocks头文件目录配置 （pkg-config --cflags opencv 结果）
+
+test1->Search directories->Compiler
+
+/usr/include/opencv
+
+/usr/include/opencv2
+
+include里opencv的包都要加上
+
+\item CodeBlocks 路文件目录配置
+
+test1->Search directories->Linker
+
+/usr/lib
+
+安装好后，用testprogram里的.cbp文件测试下
+
+\end{enumerate}
+
+参考网址：http://blog.csdn.net/adong76/article/details/40018407
+          
+         http://blog.csdn.net/hitwengqi/article/details/7985343
+
+\end{document}
+

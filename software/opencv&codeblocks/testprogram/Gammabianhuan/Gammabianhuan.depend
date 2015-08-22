@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1436257600 source:/home/changlin/tmp/opencv_exercise/Gamma/Gammabianhuan/main.cpp
+	"cv.h"
+	"highgui.h"
+	<stdio.h>
+
+1436258832 source:/home/changlin/git/PDFfiles/ppt/Weekly_report/20150714_rp3_digital_section3/opencv_exercise/Gamma/Gammabianhuan/main.cpp
+	"cv.h"
+	"highgui.h"
+	<stdio.h>
+
