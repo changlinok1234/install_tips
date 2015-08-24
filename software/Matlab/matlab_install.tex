@@ -272,14 +272,22 @@ sudo  ln  -s  /opt/matlab/bin/matlab    /usr/bin/matlab
 下面以64位版本为例进行配置
 
 \item 进入字体配置文件目录
+
 代码:
+
 cd  /opt/matlab/sys/java/jre/glnx86/jre/lib
 
-如果fontconfig.properties文件不存在，可以从fontconfig.properties.src复制一个
-代码:
+如果fontconfig.properties文件不存在，可以从fontconfig.properties.src复制一个。代码:
+
 sudo  cp  fontconfig.properties.src  fontconfig.properties
 
-效果图如附件里的  1.png
+效果图如图\ref{fig:1}
+\begin{figure}[!htb] %插图
+\centering
+\includegraphics[width=0.5\textwidth]{1.png}
+\caption{效果图一}
+\label{fig:1}
+\end{figure}
 
 \item 字体可直接用系统自带的文泉驿即wqy文件夹,没有自己拷上。
 
@@ -297,11 +305,26 @@ allfonts.chinese-arphic1=-misc-simsun-medium-r-normal--0-0-0-0-p-0-iso10646-1
 
 filename.-misc-simsun-medium-r-normal--0-0-0-0-p-0-iso10646-1=/usr/share/fonts/truetype/wqy/wqy-microhei.ttc
 
-效果图如附件里的  2.png
+效果图如图\ref{fig:2}
+
+\begin{figure}[!htb] %插图
+\centering
+\includegraphics[width=0.5\textwidth]{2.png}
+\caption{效果图二}
+\label{fig:2}
+\end{figure}
+
 
 \item 修改字体搜索,  接着在此配置文件中查找  sequence.allfonts  行。如果其后的sequence开头的行中有:  chinese-arphics1，  可以略过此步；否则在其后面加入一行：  sequence.fallback=chinese-arphic1
 
-效果图如附件里的  3.png
+ 效果图如图\ref{fig:3}
+\begin{figure}[!htb] %插图
+\centering
+\includegraphics[width=0.5\textwidth]{3.png}
+\caption{效果图三}
+\label{fig:3}
+\end{figure}
+
 
 \end{enumerate}
 

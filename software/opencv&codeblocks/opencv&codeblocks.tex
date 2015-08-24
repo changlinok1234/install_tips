@@ -212,15 +212,18 @@
 
 \item 安装基本编译环境
 
-sudo apt-get install build-essential
-
+\begin{lstlisting}
+sudo apt-get install build-essential 
 sudo apt-get install
+\end{lstlisting}
+
+%build-essential是c语言的开发包，包含了gcc make gdb和libc函数库很多工具
 
 \item 安装codeblocks
 
 sudo apt-get install codeblocks
 
-sudo apt-get install codeblocks-dbg
+%sudo apt-get install codeblocks-dbg  可选扩展
 
 \begin{comment}
 
@@ -276,13 +279,15 @@ lib /usr/lib
 
 \item 系统更新
 
+\begin{lstlisting}
 sudo apt-get update
-
 sudo apt-get upgrade
+\end{lstlisting}
 
 \item 安装必要的组件
 
 sudo apt-get install build-essential libgtk2.0-dev libjpeg-dev libtiff4-dev libjasper-dev libopenexr-dev cmake python-dev python-numpy python-tk libtbb-dev libeigen3-dev yasm libfaac-dev libopencore-amrnb-dev libopencore-amrwb-dev libtheora-dev libvorbis-dev libxvidcore-dev libx264-dev libqt4-dev libqt4-opengl-dev sphinx-common texlive-latex-extra libv4l-dev libdc1394-22-dev libavcodec-dev libavformat-dev libswscale-dev default-jdk ant libvtk5-qt4-dev
+
 
 \item 编译opecv3.0
 
@@ -291,13 +296,12 @@ sudo apt-get install build-essential libgtk2.0-dev libjpeg-dev libtiff4-dev libj
 mkdir build
 
 进入build目录
-
+\begin{lstlisting}
 cd build
-
 cmake -D CMAKE\_BUILD\_TYPE=Release -D CMAKE\_INSTALL\_PREFIX=/usr/local ..
+\end{lstlisting}
 
 % cmake -D WITH\_TBB=ON -D BUILD\_NEW\_PYTHON\_SUPPORT=ON -D WITH\_V4L=ON -D INSTALL\_C\_EXAMPLES=ON -D INSTALL\_PYTHON\_EXAMPLES=ON -D BUILD\_EXAMPLES=ON -D WITH\_QT=ON -D WITH\_OPENGL=ON ..
-
 
 \item 安装opencv3.0
 
