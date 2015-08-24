@@ -210,14 +210,20 @@
 
 \begin{enumerate}
 \item 下载TexLive2014镜像文件到/home/changlin
-\item 挂载镜像文件：
+\item 挂载镜像文件
 
-在终端输入：sudo mount -o loop /home/changlin/software/texlive2014.iso /mnt
+在终端输入
+
+sudo mount -o loop /home/changlin/software/texlive2014.iso /mnt
+
 \item 进行安装
 
-在终端输入：cd /mnt
+在终端输入
 
-           sudo ./install-tl
+\begin{lstlisting}
+cd /mnt
+sudo ./install-tl
+\end{lstlisting}
 
 注意安装后默认的安装目录是/usr/local，要把安装文件移动到/opt下：
 
@@ -251,15 +257,19 @@ mv /usr/local/texlive /opt
 此时texlive就安装成功了，你可以在/home/tmp下新建一个1.tex的文档，比如
 
 \begin{latexcode}
+
 \documentclass{article}
 \begin{document}
 dffdrgdfgfdgfd
 \end{document}
 \end{latexcode}
 
-然后打开终端输入cd /home
+然后打开终端输入
 
-               xelatex 1.tex
+\begin{lstlisting}
+cd /home/tmp
+xelatex 1.tex
+\end{lstlisting}
 
 如果能生成一个PDF文件，里面的内容是dffdrgdfgfdgfd ，就说明安装成功了。
 
@@ -278,7 +288,7 @@ dffdrgdfgfdgfd
 \defaultfontfeatures{Mapping=tex-text}
 %如果没有它，会有一些 tex 特殊字符无法正常使用，比如连字符。
 %中文断行
-\XeTeXlinebreaklocale ``zh''
+\XeTeXlinebreaklocale "zh"
 \XeTeXlinebreakskip = 0pt plus 1pt minus 0.1pt
 \setCJKmainfont[BoldFont={SimHei}, ItalicFont={楷体\_GB2312}]{SimSun}
 \setCJKfamilyfont{song}{SimSun}
@@ -295,22 +305,27 @@ dffdrgdfgfdgfd
 \def\songti{\song}
 \end{latexcode}
 
-\item 察看电脑中所安装过的字体：在终端输入：fc-list :lang=zh-cn，将安装包里的Adobe-fonts-otf文件夹复制到/usr/share/fonts/truetype下
+\item 察看电脑中所安装过的字体
+
+在终端输入
+
+fc-list :lang=zh-cn
+
+将安装包里的Adobe-fonts-otf文件夹复制到/usr/share/fonts/truetype下
 
 sudo cp -a Adobe-fonts-otf /usr/share/fonts/truetype
 
 \item 测试
 
-新建一个名为2.tex的测试文档
-
-文档内容
+新建一个名为2.tex的测试文档,文档内容为
 
 \begin{latexcode}
-\documentclass\{article\}
-\usepackage\{zhfontcfg\}
-\begin\{document\}
+
+\documentclass{article}
+\usepackage{zhfontcfg}
+\begin{document}
 中文
-\end\{document\}
+\end{document}
 \end{latexcode}
 
 输入命令xelatex 2.tex，若生成一个内容为“中文”的PDF文档，则说明配置成功了, 如果不行，可以重启下试试。（注意，你的.tex文档应该与zhfontcfg.sty文件同在一个文件夹）。
