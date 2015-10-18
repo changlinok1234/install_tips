@@ -317,7 +317,7 @@ make[1]:*** [modules/java/CmakeFiles/opencv\_java.dir/all ]错误2
 
 make:*** [all] 错误 2
 
-搜网上解决方案，把CMakeLists.txt里的有关java的--java support--和==java==部分删掉了，影响未知
+搜网上解决方案，把CMakeLists.txt里的有关java的--java support--和==java==部分删掉之后就不会再报错了，其他影响未知
 
 \item sudo make install
 
@@ -335,9 +335,9 @@ sudo gedit /etc/ld.so.conf.d/opencv.conf
 
 sudo ldconfig
 
-\begin{comment}
+\item 配置cmake路径
 
-打开文件bash.bashrc  //这个暂时不知道是干嘛的,我没执行, 程序没影响
+打开文件bash.bashrc  
 
 sudo gedit /etc/bash.bashrc
 
@@ -347,14 +347,12 @@ PKG\_CONFIG\_PATH=\$PKG\_CONFIG\_PATH:/usr/local/lib/pkgconfig
 
 export PKG\_CONFIG\_PATH\
 
-\end{comment}
-
 \end{enumerate}
 
 \section{配置}
 
 \begin{enumerate}
-\item codeblocks链接库配置：Project->Build Options(似乎要在setting->compiler里相同的配一遍才能保存当前设置)
+\item codeblocks链接库配置：Project->Build Options(要在setting->compiler里相同的配一遍全局，才能保存当前设置)
 
 test1(工程名称)->Linker settings
 
@@ -364,9 +362,11 @@ test1(工程名称)->Linker settings
 
 /../../../usr/local/lib/libopencv\_highgui.so
 
-以上仅是列举，lib文件里的都要加进去
+以上仅是列举，lib里的文件都要加进去，文件夹就不用关了
 
-\item codeblocks头文件目录配置 （pkg-config --cflags opencv 结果）
+\item codeblocks头文件目录配置 （可用pkg-config $--$cflags opencv 查看配置结果）
+
+还是在Project->Build Options(要在setting->compiler里相同的配一遍全局，才能保存当前设置)里找
 
 test1->Search directories->Compiler
 
@@ -392,7 +392,21 @@ test1->Search directories->Linker
 
 \begin{description}
 
-\item [注意事项]如果哪天你保存好文件，建立好连接不报错，点运行时，总是提示你程序还没有"build"，而且你点"yes"之后没有预想的结果出来，可能是opencv更新了什么东西编译软件还没能识别，需要在终端输入：sudo ldconfig
+\item [注意事项1]如果哪天你保存好文件，建立好连接不报错，点运行时，总是提示你程序还没有"build"，而且你点"yes"之后没有预想的结果出来。
+
+\item [解决方案]可能是opencv更新了什么东西编译软件还没能识别，需要在终端输入：sudo ldconfig
+
+\item [注意事项2(汤宁贡献)]安装codeblocks并进行opencv全局关联配置后,无法保存配置,即每次打开新的工程都要重新进行关联配置。
+
+\item [问题出现的原因]codeblocks的所有者和用户组是root而不是使用者本人。
+
+\item [解决方案]终端～目录下输入 ls -la查看.codeblocks文件夹的所有者和用户是否是使用者本人，如果是root就要对其进行更改。方式：
+
+chown -R 用户名 .codeblocks
+
+chgrp -R 用户名 .codeblocks
+
+更改.codeblocks的所有者和用户组
 
 \end{description}
 
